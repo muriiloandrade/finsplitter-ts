@@ -1,0 +1,37 @@
+const fs = require('node:fs');
+
+const config = JSON.parse(fs.readFileSync('./.swcrc', 'utf-8'));
+
+/** @type {import('jest').Config} */
+const jestConfig = {
+  moduleFileExtensions: ['js', 'json', 'ts'],
+  rootDir: './src',
+  testRegex: '.*\\.spec\\.ts$',
+  transform: {
+    '^.+\\.(t|j)s$': [
+      '@swc/jest',
+      {
+        ...config,
+        jsc: {
+          ...config.jsc,
+          paths: {
+            '@app/*': ['./src/app/*'],
+            '@domain/*': ['./src/domain/*'],
+            '@config/*': ['./src/config/*'],
+            '@infra/*': ['./src/infra/*'],
+            '@interface/*': ['./src/interface/*'],
+            '@shared/*': ['./src/shared/*'],
+            '@mocks': ['./src/../test/mocks'],
+          },
+        },
+      },
+    ],
+  },
+  collectCoverageFrom: ['**/*.(t|j)s'],
+  coverageDirectory: './coverage/unit',
+  coveragePathIgnorePatterns: ['dist', '.spec.ts', 'index.ts'],
+  testEnvironment: 'node',
+  extensionsToTreatAsEsm: ['.ts'],
+};
+
+module.exports = jestConfig;
