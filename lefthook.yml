@@ -1,0 +1,38 @@
+#   Refer for explanation to following link:
+#   https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+#
+
+output:
+  - summary        # Print summary block (successful and failed steps)
+  - failure        # Print failed steps printing
+  - execution      # Print any execution logs (but prints if the execution failed)
+  
+pre-push:
+  piped: true
+  commands:
+    packages-audit:
+      priority: 1
+      tags: security
+      run: npm audit
+    
+# Use this to lint, format and fix code
+pre-commit:
+  commands:
+    biome:
+      run: npx biome check --write --error-on-warnings --no-errors-on-unmatched {staged_files}
+      stage_fixed: true
+  
+# Use this to build commit messages
+prepare-commit-msg:
+  commands:
+    commitzen:
+      interactive: true
+      run: "grep -q \"^[^#]\" .git/COMMIT_EDITMSG || npx --no-install cz"
+      env:
+        LEFTHOOK: 0
+
+# Use this to validate commit messages
+commit-msg:
+  commands:
+    lint-commit-message:
+      run: npx --no-install commitlint --edit {1}
