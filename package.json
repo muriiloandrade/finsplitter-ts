@@ -63,7 +63,16 @@
     },
     "collectCoverageFrom": ["**/*.(t|j)s"],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "@app/(.*)": "<rootDir>/app/$1",
+      "@domain/(.*)": "<rootDir>/domain/$1",
+      "@config/(.*)": "<rootDir>/config/$1",
+      "@infra/(.*)": "<rootDir>/infra/$1",
+      "@interface/(.*)": "<rootDir>/interface/$1",
+      "@shared/(.*)": "<rootDir>/shared/$1",
+      "@mocks": "<rootDir>/../test/mocks"
+    }
   },
   "engines": {
     "node": ">=22.14.0"

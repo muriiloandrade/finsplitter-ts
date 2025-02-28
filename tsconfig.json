@@ -28,7 +28,7 @@
       "@infra/*": ["src/infra/*"],
       "@interface/*": ["src/interface/*"],
       "@shared/*": ["src/shared/*"],
-      "@test/*": ["src/test/*"]
+      "@mocks/*": ["test/mocks/*"]
     }
   }
 }
