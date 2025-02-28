@@ -5,6 +5,7 @@ root = true
 indent_style = space
 # Indentation size: 2 spaces
 indent_size = 2
+tab_width = 2
 # End-of-line character: LF
 end_of_line = lf
 # Character encoding: utf-8
