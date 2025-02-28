@@ -1,0 +1,93 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+  "files": {
+    "ignore": ["node_modules", "chart", "dist"],
+    "include": ["./**/*.js", "./**/*.json", "./**/*.ts"]
+  },
+  "overrides": [
+    {
+      "include": ["test/**/*"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["test/mocks/*"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useNamingConvention": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["src/gateways/services/**/*"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useNamingConvention": "off"
+          }
+        }
+      }
+    }
+  ],
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "style": {
+        "useNamingConvention": {
+          "level": "warn",
+          "options": {
+            "strictCase": false
+          }
+        },
+        "useFilenamingConvention": "warn",
+        "useShorthandArrayType": "warn",
+        "useImportType": "off"
+      },
+      "correctness": {
+        "noUnusedImports": "warn"
+      },
+      "suspicious": {
+        "noConsoleLog": "error",
+        "useAwait": "warn"
+      }
+    },
+    "ignore": ["node_modules", "chart", "dist"]
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "indentStyle": "space",
+    "ignore": ["node_modules", "chart", "dist"],
+    "lineWidth": 80
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "trailingCommas": "all"
+    },
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    }
+  },
+  "json": {
+    "parser": {
+      "allowComments": true
+    },
+    "formatter": {
+      "trailingCommas": "none"
+    }
+  }
+}
