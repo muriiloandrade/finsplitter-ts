@@ -4,7 +4,7 @@
     "enabled": true
   },
   "files": {
-    "ignore": ["node_modules", "chart", "dist"],
+    "ignore": ["node_modules", "chart", "dist", "src/metadata.ts"],
     "include": ["./**/*.js", "./**/*.json", "./**/*.ts"]
   },
   "overrides": [
@@ -19,17 +19,7 @@
       }
     },
     {
-      "include": ["test/mocks/*"],
-      "linter": {
-        "rules": {
-          "style": {
-            "useNamingConvention": "off"
-          }
-        }
-      }
-    },
-    {
-      "include": ["src/gateways/services/**/*"],
+      "include": ["src/infra/config/**/*", "test/mocks/*"],
       "linter": {
         "rules": {
           "style": {

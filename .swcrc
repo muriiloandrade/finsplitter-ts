@@ -2,7 +2,7 @@
     "$schema": "https://swc.rs/schema.json",
     "sourceMaps": "inline",
     "jsc": {
-        "target": "es2021",
+        "target": "es2023",
         "parser": {
             "syntax": "typescript",
             "decorators": true,
@@ -17,7 +17,7 @@
         "baseUrl": "./"
     },
     "module": {
-        "type": "nodenext"
+        "type": "commonjs"
     },
     "minify": false
 }

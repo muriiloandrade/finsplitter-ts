@@ -17,7 +17,6 @@ const jestConfig = {
           paths: {
             '@app/*': ['./src/app/*'],
             '@domain/*': ['./src/domain/*'],
-            '@config/*': ['./src/config/*'],
             '@infra/*': ['./src/infra/*'],
             '@interface/*': ['./src/interface/*'],
             '@shared/*': ['./src/shared/*'],
@@ -28,7 +27,7 @@ const jestConfig = {
     ],
   },
   collectCoverageFrom: ['**/*.(t|j)s'],
-  coverageDirectory: './coverage/unit',
+  coverageDirectory: './coverage',
   coveragePathIgnorePatterns: ['dist', '.spec.ts', 'index.ts'],
   testEnvironment: 'node',
   extensionsToTreatAsEsm: ['.ts'],

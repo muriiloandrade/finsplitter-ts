@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
 
+import { EnvModule } from '@infra/config';
 import { HealthCheckModule } from '@interface/modules';
 
-const declaredModules = [HealthCheckModule];
+const declaredModules = [HealthCheckModule, EnvModule];
 
 @Module({
   imports: [

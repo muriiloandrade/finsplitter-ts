@@ -1,10 +1,16 @@
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+import { EnvService } from '@infra/config';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    bufferLogs: true,
+  });
+
+  const env = app.get<EnvService>(EnvService);
 
   const config = new DocumentBuilder()
     .setTitle('FinSplitter')
@@ -12,7 +18,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' });
 
-  config.addServer(`http://localhost:${process.env.PORT ?? 3000}`, 'Local');
+  config.addServer(`http://localhost:${env.appEnv()}`, 'Local');
 
   const swaggerUrl = 'docs';
   const document = SwaggerModule.createDocument(app, config.build());
@@ -21,6 +27,7 @@ async function bootstrap() {
     jsonDocumentUrl: `${swaggerUrl}/json`,
   });
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(env.port());
+  Logger.log(`App running on port: ${env.port()}`);
 }
 bootstrap();
