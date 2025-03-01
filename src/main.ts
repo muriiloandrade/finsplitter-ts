@@ -18,7 +18,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' });
 
-  config.addServer(`http://localhost:${env.appEnv()}`, 'Local');
+  config.addServer(`http://localhost:${env.appEnv}`, 'Local');
 
   const swaggerUrl = 'docs';
   const document = SwaggerModule.createDocument(app, config.build());
@@ -27,7 +27,7 @@ async function bootstrap() {
     jsonDocumentUrl: `${swaggerUrl}/json`,
   });
 
-  await app.listen(env.port());
-  Logger.log(`App running on port: ${env.port()}`);
+  await app.listen(env.port);
+  Logger.log(`App running on port: ${env.port}`);
 }
 bootstrap();
