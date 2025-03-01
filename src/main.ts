@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { ConsoleLogger, Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
@@ -11,6 +11,14 @@ async function bootstrap() {
   });
 
   const env = app.get<EnvService>(EnvService);
+
+  app.useLogger(
+    new ConsoleLogger({
+      showHidden: true,
+      json: env.logFormat === 'production',
+      logLevels: ['verbose', 'debug', 'log', 'warn', 'error', 'fatal'],
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('FinSplitter')
