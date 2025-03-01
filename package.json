@@ -9,7 +9,6 @@
     "build": "nest build",
     "start": "nest start",
     "start:dev": "nest start --watch --preserveWatchOutput",
-    "start:debug": "nest start --debug --watch --preserveWatchOutput",
     "start:prod": "node dist/main",
     "format": "biome format --write --error-on-warnings --no-errors-on-unmatched .",
     "lint": "biome lint --write --error-on-warnings --no-errors-on-unmatched .",

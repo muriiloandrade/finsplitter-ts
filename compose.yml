@@ -1,50 +1,27 @@
 ---
+include:
+  - compose.infra.yml
+
 services:
-  postgresql:
+  server:
     profiles:
-      - infra
-    image: postgres:17.4-alpine3.20
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
-      start_period: 20s
-      interval: 30s
-      retries: 5
-      timeout: 5s
+      - "full"
+      - "backend"
+    container_name: finsplitter
+    build:
+      context: .
+      target: ${BUILD_TARGET:-dev-builder}
+      dockerfile: Dockerfile
+    command: dumb-init npm run start:dev -- --debug 0.0.0.0:${DEBUGGER_PORT}
+    image: finsplitter:local
+    ports:
+      - "${PORT}:${PORT}"
+      - "${DEBUGGER_PORT}:${DEBUGGER_PORT}"
     volumes:
-      - database:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: ${PG_PASS:?database password required}
-      POSTGRES_USER: ${PG_USER:-finsplitter}
-      POSTGRES_DB: ${PG_DB:-finsplitter}
-    env_file:
-      - .env
+      - .:/app
+      - /app/node_modules
+    env_file: .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - finsplitter
-      
-  keydb:
-    profiles:
-      - infra
-    image: eqalpha/keydb:x86_64_v6.3.2
-    command: --server-threads 4 --loglevel warning --requirepass ${KEYDB_PASS:?keydb password required}
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "keydb-cli --pass ${KEYDB_PASS} ping | grep PONG"]
-      start_period: 20s
-      interval: 30s
-      retries: 5
-      timeout: 3s
-    volumes:
-      - cache:/data
-    networks:
-      - finsplitter
-
-volumes:
-  database:
-    driver: local
-  cache:
-    driver: local
-
-networks:
-  finsplitter:
-    name: finsplitter-net

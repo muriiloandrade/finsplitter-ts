@@ -10,7 +10,7 @@
       "name": "Debug inside container",
       "remoteRoot": "/app",
       "localRoot": "${workspaceFolder}",
-      "port": 9329,
+      "port": 9399,
       "restart": {
         "delay": 1000,
         "maxAttempts": 10
