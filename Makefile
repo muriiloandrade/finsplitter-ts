@@ -62,6 +62,6 @@ clean:
 	@echo "==> Deleting Docker image"
 	@docker rmi ${NAME}:${VERSION}
 
-docker-scout:
+docker-scout: build
 	@echo "==> Search for vulnerabilities on prod image"
 	@docker scout cves -e --only-fixed ${NAME}:${VERSION}
