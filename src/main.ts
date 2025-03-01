@@ -1,22 +1,40 @@
-import { ConsoleLogger, Logger } from '@nestjs/common';
+import { ConsoleLogger, Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { EnvService } from '@infra/config';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    bufferLogs: true,
-  });
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter({
+      requestIdHeader: 'x-request-id',
+    }),
+    {
+      bufferLogs: true,
+      bodyParser: true,
+    },
+  );
 
   const env = app.get<EnvService>(EnvService);
 
+  app.enableShutdownHooks();
   app.useLogger(
     new ConsoleLogger({
       showHidden: true,
       json: env.logFormat === 'production',
       logLevels: ['verbose', 'debug', 'log', 'warn', 'error', 'fatal'],
+    }),
+  );
+  app.useGlobalPipes(
+    new ValidationPipe({
+      stopAtFirstError: false,
+      transform: true,
     }),
   );
 
@@ -35,7 +53,7 @@ async function bootstrap() {
     jsonDocumentUrl: `${swaggerUrl}/json`,
   });
 
-  await app.listen(env.port);
+  await app.listen(env.port, '0.0.0.0');
   Logger.log(`App running on port: ${env.port}`);
 }
 bootstrap();
