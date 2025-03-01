@@ -17,7 +17,7 @@
     "test:watch": "jest -w=50% --watch",
     "test:cov": "jest -w=50% --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest -w=50% --config ./test/jest.config.e2e.js"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
