@@ -27,8 +27,15 @@ const jestConfig = {
     ],
   },
   collectCoverageFrom: ['**/*.(t|j)s'],
-  coverageDirectory: './coverage',
-  coveragePathIgnorePatterns: ['dist', '.spec.ts', 'index.ts'],
+  coverageDirectory: '../coverage',
+  coveragePathIgnorePatterns: [
+    'dist',
+    '.spec.ts',
+    'index.ts',
+    'metadata.ts',
+    'module.ts',
+    'main.ts',
+  ],
   testEnvironment: 'node',
   extensionsToTreatAsEsm: ['.ts'],
 };
